@@ -3,28 +3,26 @@ package com.eventbooking.eventparadise.services.impls;
 import com.eventbooking.eventparadise.data.constants.Authority;
 import com.eventbooking.eventparadise.data.models.Event;
 import com.eventbooking.eventparadise.data.models.Organizer;
-import com.eventbooking.eventparadise.data.models.Ticket;
 import com.eventbooking.eventparadise.data.repositories.EventRepository;
 import com.eventbooking.eventparadise.data.repositories.OrganizerRepository;
 import com.eventbooking.eventparadise.data.repositories.TicketRepository;
 import com.eventbooking.eventparadise.dataTransferObjects.requests.*;
 import com.eventbooking.eventparadise.dataTransferObjects.responses.*;
-import com.eventbooking.eventparadise.exceptions.EventNotFoundException;
 import com.eventbooking.eventparadise.exceptions.OrganizerNotFoundException;
 import com.eventbooking.eventparadise.services.OrganizerService;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 import static com.eventbooking.eventparadise.data.constants.Authority.ORGANIZER;
 
 @Service
+@Slf4j
 public class EventParadiseOrganizerService implements OrganizerService {
 
     private final OrganizerRepository organizerRepository;
@@ -49,7 +47,7 @@ public class EventParadiseOrganizerService implements OrganizerService {
 
     @Override
     public RegisterOrganizerResponse register(RegisterOrganizerRequest registerRequest) {
-
+        log.info("register organizer request: {}", registerRequest);
         Organizer organizer =  modelMapper.map(registerRequest, Organizer.class);
         organizer.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
         organizer.setAuthorities(new HashSet<>());
@@ -83,7 +81,7 @@ public class EventParadiseOrganizerService implements OrganizerService {
     }
 
     @Override
-    public AddTicketResponse addTicket(AddTicketRequest addTicketRequest) {
+    public AddTicketResponse addTicketToEvent(AddTicketRequest addTicketRequest) {
         // Organizer organizer = organizerRepository.findOrganizerById(addTicketRequest.getOrganizerId());
 
 //        Event event = eventRepository.findById(addTicketRequest.getEventId())
@@ -109,7 +107,7 @@ public class EventParadiseOrganizerService implements OrganizerService {
     }
 
     @Override
-    public Organizer getById(long id) {
+    public Organizer getByOrganizerById(long id) {
         return organizerRepository.findOrganizerById(id).orElseThrow(() -> new OrganizerNotFoundException(
                 String.format("organizer with id %d not found", id)));
     }

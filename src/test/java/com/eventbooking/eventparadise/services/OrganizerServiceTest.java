@@ -1,7 +1,6 @@
 package com.eventbooking.eventparadise.services;
 
 
-import com.eventbooking.eventparadise.data.constants.EventCategory;
 import com.eventbooking.eventparadise.data.models.Organizer;
 import com.eventbooking.eventparadise.data.repositories.OrganizerRepository;
 import com.eventbooking.eventparadise.dataTransferObjects.requests.CreateEventRequest;
@@ -13,8 +12,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
-
-import java.util.Locale;
 
 import static com.eventbooking.eventparadise.data.constants.EventCategory.CONFERENCE;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -47,7 +44,7 @@ public class OrganizerServiceTest {
     @Test
     @DisplayName("test that organizer can create event")
     public void organizerCanCreateEventTest(){
-        Organizer organizer = organizerService.getById(400L);
+        Organizer organizer = organizerService.getByOrganizerById(400L);
         CreateEventRequest createEvent = new CreateEventRequest();
         createEvent.setOrganizerId(organizer.getId());
         createEvent.setCategory(CONFERENCE);

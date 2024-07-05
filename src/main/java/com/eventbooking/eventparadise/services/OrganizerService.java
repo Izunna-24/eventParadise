@@ -8,8 +8,8 @@ public interface OrganizerService {
 RegisterOrganizerResponse register(RegisterOrganizerRequest registerRequest);
 CreateEventResponse createEvent(CreateEventRequest createEvent);
 CreateGuestListResponse getGuestList(CreateGuestListRequest createGuestList);
-AddTicketResponse addTicket(AddTicketRequest addTicketRequest);
+AddTicketResponse addTicketToEvent(AddTicketRequest addTicketRequest);
 TicketDiscountResponse getDiscount(TicketDiscountRequest discountRequest);
 ViewEventAttendeesResponse viewAttendees(ViewEventAttendeesRequest eventAttendeesRequest);
-Organizer getById(long id);
+Organizer getByOrganizerById(long id);
 }
